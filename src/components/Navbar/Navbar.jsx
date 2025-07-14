@@ -19,7 +19,6 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  // Toggle menu for mobile
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -28,22 +27,23 @@ export default function Navbar() {
     <nav className="bg-gray-100 shadow-md sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              className="text-gray-700 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
-          </div>
 
+          {userLogin && (
+            <div className="flex items-center md:hidden">
+              <button
+                onClick={toggleMobileMenu}
+                className="text-gray-700 focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+              </button>
+            </div>
+          )}
           <div className="flex items-center">
             <Link to="/" onClick={() => setMobileMenuOpen(false)}>
               <img className="h-10" src={logo} alt="logo" />
             </Link>
           </div>
-
           {userLogin && (
             <ul className="hidden md:flex items-center gap-4 text-sm font-semibold text-gray-700">
               <li><Link to="/" className={`px-3 py-2 rounded-md transition-all ${isActive('/') ? 'text-green-500' : 'hover:text-green-500'}`}>Home</Link></li>
@@ -85,60 +85,12 @@ export default function Navbar() {
 
         {userLogin && mobileMenuOpen && (
           <ul className="md:hidden flex flex-col gap-3 bg-gray-100 p-4 border-t border-gray-300">
-            <li>
-              <Link
-                to="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/products"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/products') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                Products
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/categories"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/categories') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                Categories
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/brands"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/brands') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                Brands
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/allorders"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/allorders') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                Orders
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/wishlist"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/wishlist') ? 'text-green-500' : 'hover:text-green-500'}`}
-              >
-                WishList
-              </Link>
-            </li>
+            <li><Link to="/" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/') ? 'text-green-500' : 'hover:text-green-500'}`}>Home</Link></li>
+            <li><Link to="/products" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/products') ? 'text-green-500' : 'hover:text-green-500'}`}>Products</Link></li>
+            <li><Link to="/categories" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/categories') ? 'text-green-500' : 'hover:text-green-500'}`}>Categories</Link></li>
+            <li><Link to="/brands" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/brands') ? 'text-green-500' : 'hover:text-green-500'}`}>Brands</Link></li>
+            <li><Link to="/allorders" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/allorders') ? 'text-green-500' : 'hover:text-green-500'}`}>Orders</Link></li>
+            <li><Link to="/wishlist" onClick={() => setMobileMenuOpen(false)} className={`block px-3 py-2 rounded-md font-semibold ${isActive('/wishlist') ? 'text-green-500' : 'hover:text-green-500'}`}>WishList</Link></li>
           </ul>
         )}
       </div>
