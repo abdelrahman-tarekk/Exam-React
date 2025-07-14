@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/images/freshcart-logo.svg';
 import { UserContext } from '../../Context/UserContext';
 import { CartContext } from '../../Context/Cart.context';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { userLogin, logout } = useContext(UserContext);
   const { cartData } = useContext(CartContext);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
@@ -17,12 +19,27 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  // Toggle menu for mobile
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <nav className="bg-gray-100 shadow-md sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-center justify-between h-16">
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={toggleMobileMenu}
+              className="text-gray-700 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
+
           <div className="flex items-center">
-            <Link to="/">
+            <Link to="/" onClick={() => setMobileMenuOpen(false)}>
               <img className="h-10" src={logo} alt="logo" />
             </Link>
           </div>
@@ -65,6 +82,65 @@ export default function Navbar() {
             )}
           </div>
         </div>
+
+        {userLogin && mobileMenuOpen && (
+          <ul className="md:hidden flex flex-col gap-3 bg-gray-100 p-4 border-t border-gray-300">
+            <li>
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/products"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/products') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                Products
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/categories"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/categories') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                Categories
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/brands"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/brands') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                Brands
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/allorders"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/allorders') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                Orders
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/wishlist"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md font-semibold ${isActive('/wishlist') ? 'text-green-500' : 'hover:text-green-500'}`}
+              >
+                WishList
+              </Link>
+            </li>
+          </ul>
+        )}
       </div>
     </nav>
   );
